@@ -111,16 +111,14 @@ def read_posts():
                                    post['attachments'])))
                     ]
             post_list.append([post['owner_id'],
-                            post['text'],
-                            post['comments']['count'],
-                            post['likes']['count'],
-                            post['reposts']['count'],
-                            post['date'],
-                            post['post_type'],
-                            post['views']['count'] if 'views' in post else 0,
-                            *ch,
-                            *att
-                           ])
+                              post['text'],
+                              post['comments']['count'],
+                              post['likes']['count'],
+                              post['reposts']['count'],
+                              post['date'],
+                              post['post_type'],
+                              post['views']['count'] if 'views' in post else 0
+                              ] + ch + att)
 
     post_df = pd.DataFrame(post_list, columns=['owner_id', 'text', 'comments_count', 'likes_count',
                                     'reposts_count', 'date',
