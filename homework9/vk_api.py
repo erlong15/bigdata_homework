@@ -8,6 +8,7 @@ import pandas as pd
 import argparse
 import re
 from flatten_json import flatten
+from sklearn.feature_extraction.text import TfidfVectorizer
 
 
 USERS_JSON = 'users.json'
@@ -131,18 +132,24 @@ def read_posts():
     #post_df.to_csv(POSTS_CSV)
     return post_df
 
+def tdidf_transform(text_list):
+    vectorizer = TfidfVectorizer()
+    features = vectorizer.fit_transform(text_list).todense()
+    print(len(features))
+
 
 def read_transform():
     user_df = read_users()
     post_df = read_posts()
 
     print(user_df.columns)
-    #print(user_df.head(5))
+    print(user_df.head(5))
 
     #post_df = post_df.dropna(axis=1, thresh=1000)
     print(post_df.columns)
-    print(post_df.sample(5))
-    print(post_df.describe())
+    tdidf_transform(post_df['text'].sample(100).tolist())
+    #print(post_df.sample(5))
+    #print(post_df.describe())
 
     
 
